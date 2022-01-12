@@ -165,7 +165,8 @@ ts::TeletextDemux::TeletextDemux(DuckContext& duck, TeletextHandlerInterface* ha
     SuperClass(duck, nullptr, pidFilter),
     _txtHandler(handler),
     _pids(),
-    _addColors(false)
+    _addColors(false),
+    _addLineNumbers(false)
 {
 }
 
@@ -530,6 +531,11 @@ void ts::TeletextDemux::processTeletextPage(PID pid, PIDContext& pc, int pageNum
             }
 
             if (col == colStart) {
+                if (_addLineNumbers) {
+                    line.append(u"{\\an");
+                    line.append(UString::Format(u"%d", {row}));
+                    line.append(u"}");
+                }
                 if (foregroundColor != 0x7 && _addColors) {
                     line.append(u"<font color=\"");
                     line.append(TELETEXT_COLORS[foregroundColor]);

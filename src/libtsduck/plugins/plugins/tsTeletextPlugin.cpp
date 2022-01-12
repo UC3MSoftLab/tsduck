@@ -56,6 +56,10 @@ ts::TeletextPlugin::TeletextPlugin(TSP* tsp_) :
     // We need to define character sets to specify service names.
     duck.defineArgsForCharset(*this);
 
+    option(u"line-numbers", 'n');
+    help(u"line-numbers",
+         u"Add line number tags in the subtitles. By default, no line number is specified.");
+
     option(u"colors", 'c');
     help(u"colors",
          u"Add font color tags in the subtitles. By default, no color is specified.");
@@ -115,6 +119,7 @@ bool ts::TeletextPlugin::start()
     getValue(_language, u"language");
     getValue(_outFile, u"output-file");
     _demux.setAddColors(present(u"colors"));
+    _demux.setAddLineNumbers(present(u"line-numbers"));
 
     // Create the output file.
     if (_outFile.empty()) {

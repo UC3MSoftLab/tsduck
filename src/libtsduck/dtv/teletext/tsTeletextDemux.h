@@ -85,6 +85,24 @@ namespace ts {
         }
 
         //!
+        //! Activate or deactivate the line number tags in the output text.
+        //! @param [in] addLineNumbers If true, line number tags will be inserted in the output text.
+        //!
+        void setAddLineNumbers(bool addLineNumbers)
+        {
+            _addLineNumbers = addLineNumbers;
+        }
+
+        //!
+        //! Check if line number tags are inserted in the output text.
+        //! @return True when line number tags are inserted in the output text.
+        //!
+        bool getAddLineNumbers() const
+        {
+            return _addLineNumbers;
+        }
+
+        //!
         //! Flush any pending Teletext message.
         //! Useful only after receiving the last packet in the stream.
         //! Implicitly called by destructor.
@@ -243,9 +261,10 @@ namespace ts {
         static int pageBinaryToBcd(int bin);
 
         // Private members:
-        TeletextHandlerInterface* _txtHandler;    //!< User handler.
-        PIDContextMap             _pids;          //!< Map of PID analysis contexts.
-        bool                      _addColors;     //!< Add font color tags.
+        TeletextHandlerInterface* _txtHandler;       //!< User handler.
+        PIDContextMap             _pids;             //!< Map of PID analysis contexts.
+        bool                      _addColors;        //!< Add font color tags.
+        bool                      _addLineNumbers;   //!< Add line number tags.
     };
 }
 
